@@ -1,0 +1,141 @@
+/* --- Definición de Variables y Reseteo --- */
+:root {
+    --color-fondo-pastel: #ffeef2; /* Rosa pastel muy bajo */
+    --color-verde-clasico: #2ecc71; /* Verde estilo retro */
+    --color-rojo-clasico: #e74c3c; /* Rojo estilo retro */
+    --color-texto: #333;
+    --fuente-retro: 'Press Start 2P', cursive; /* La fuente que importamos en HTML */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- Estilos del Cuerpo y Fondo --- */
+body {
+    background-color: var(--color-fondo-pastel);
+    font-family: var(--fuente-retro);
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* IMPRESCINDIBLE: Evita que aparezcan barras de scroll cuando el botón se mueve */
+    text-align: center;
+}
+
+/* El GIF de fondo que cae */
+#background-gif {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4; /* Lo hacemos semi-transparente para que no moleste al texto */
+    z-index: -1; /* Se queda detrás de todo */
+}
+
+/* --- Contenedor Principal --- */
+.container {
+    position: relative;
+    z-index: 10; /* Asegura que el contenido esté sobre el fondo */
+    padding: 20px;
+    max-width: 600px;
+}
+
+/* Imagen principal (el PNG) */
+.main-image {
+    width: 300px; /* Tamaño inicial */
+    height: auto;
+    margin-bottom: 20px;
+    /* Truco para que las imágenes pixel art se vean nítidas al escalarse */
+    image-rendering: pixelated; 
+
+    /* Responsividad: un poco más pequeño en móviles */
+    @media (max-width: 768px) {
+        width: 120px;
+    }
+}
+
+/* Texto de la pregunta */
+h1 {
+    color: var(--color-texto);
+    
+    /* 1. TIPOGRAFÍA FLUIDA (Responsive) */
+    /* La fuente nunca será menor a 18px ni mayor a 32px, y se adapta al ancho (4vw) */
+    font-size: clamp(1.1rem, 4vw, 2rem);
+    
+    /* 2. MAGIA DE DISTRIBUCIÓN (La clave) */
+    /* Esto hace que las líneas tengan anchos similares, evitando palabras solas al final */
+    text-wrap: balance; 
+    
+    /* 3. CONTROL DE ANCHO Y CENTRADO */
+    width: 100%;             /* Ocupa el ancho disponible... */
+    max-width: 90%;          /* ...pero deja un margen de seguridad del 5% a cada lado */
+    margin-left: auto;       /* Centrado horizontal automático */
+    margin-right: auto;      /* Centrado horizontal automático */
+    
+    /* 4. ESPACIADO */
+    line-height: 1.6;        /* Un poco más de aire para estilo retro */
+    padding: 0 10px;         /* Colchón interno para que no pegue con los bordes en móviles muy viejos */
+    margin-bottom: 40px;     /* Separación generosa con los botones */
+    
+    /* 5. ESTÉTICA RETRO */
+    text-shadow: 2px 2px 0px #fff;
+}
+
+/* --- Botones --- */
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espacio entre botones */
+    margin-top: 20px;
+    /* Esta posición relativa es importante para el estado inicial de los botones */
+    position: relative; 
+    min-height: 60px; /* Asegura espacio para que no colapse al moverse el botón NO */
+}
+
+button {
+    font-family: var(--fuente-retro);
+    font-size: 1rem;
+    padding: 15px 30px;
+    border: 4px solid #000; /* Borde grueso negro estilo 8-bits */
+    box-shadow: 4px 4px 0px #000; /* Sombra sólida negra estilo 8-bits */
+    cursor: pointer;
+    transition: transform 0.1s; /* Pequeño efecto al hacer click */
+    text-transform: uppercase;
+}
+
+button:active {
+    /* Efecto de botón presionado retro */
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #000;
+}
+
+#yesBtn {
+    background-color: var(--color-verde-clasico);
+    color: white;
+}
+
+#noBtn {
+    background-color: var(--color-rojo-clasico);
+    color: white;
+    transition: all 0.3s ease; /* Movimiento suavizado, quítalo si quieres que sea instantáneo */
+}
+
+/* Responsividad para los botones en pantallas muy pequeñas */
+@media (max-width: 480px) {
+    button {
+        padding: 10px 20px;
+        font-size: 0.8rem;
+        border-width: 3px;
+        box-shadow: 3px 3px 0px #000;
+    }
+    /* Ajuste inicial del botón NO en móviles */
+    #noBtn {
+         left: calc(50% + 40px);
+         top: calc(50% + 70px);
+    }
+}
